@@ -1,2 +1,2 @@
-- name: Setup FFmpeg
-  uses: federicocarboni/setup-ffmpeg@v3.1
+name: GitHub Actions Demo
+uses: federicocarboni/setup-ffmpeg@v3.1
