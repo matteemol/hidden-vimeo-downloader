@@ -5,6 +5,8 @@ import os
 import shutil
 import sys
 
+master = "https://65vod-adaptive.akamaized.net/exp=1711276332~acl=%2F12168687-ca09-487d-99b7-fbc1037fa8b8%2F%2A~hmac=dc5d2e823e9e72fb26167cfd62eb773e4ca5bb1ac351363218b1ca0d94e71901/12168687-ca09-487d-99b7-fbc1037fa8b8/sep/video/35d445b9,4652c052,5ea4bda4,e5fe3650,ec3db5ec/audio/b29e1245,d1d94b51,e6a153b8/master.json"
+
 if len(sys.argv) != 2:
     print("Wrong number of arguments")
     print("python3 vimeo-downloader.py <url of master.json>")
