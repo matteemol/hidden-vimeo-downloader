@@ -36,7 +36,10 @@ segment_base_name = ""
 segment_base_ext = ""
 
 
-r = requests.get(master_json_url)
+#headers = {'content-type': 'text/plain;charset=UTF-8',
+#           'cookie': 'vuid=pl433710374.638549744; language=en; has_logged_in=1; is_logged_in=1; player="volume=0.437"; _ga=GA1.2.1010891273.1690640619; _cfuvid=lU8NQzVR1grxLEXFjMY_5RyjmL9dPPF8ZaSMmlHN2zk-1711324419801-0.0.1.1-604800000; __cf_bm=sVibAfh5VkC7he0lkXhuxyWNOLx0Frkk5MIUHdG3vJ4-1711348804-1.0.1.1-B0uRXJ2OhBEa2Tjrf_.bXkkvbeW36kh_gOp4Ql5gfa.jjr9ha94G0HJcBofEcvEtlqo6GA.i4QU3e_klzkQBUA'}
+
+r = requests.get(master_json_url)#, headers=headers)
 
 parse_json(r.text)
 
@@ -65,19 +68,29 @@ for i in range(0, number_of_segments+1):
     # video
     current_segement_url = base_url + "video/" + str(video_id) + "/chop/" + segment_base_name + str(i) + segment_base_ext
     r = requests.get(current_segement_url)
-    with open(os.path.join(out_video ,"video-" + segment_base_name + str(i) + segment_base_ext), "wb") as f:
+#    v_seg_file = os.path.normpath(os.path.join(out_video ,"video-" + segment_base_name + str(i) + segment_base_ext))
+    v_seg_file = os.path.join(out_video ,"video-" + segment_base_name + str(i) + segment_base_ext)
+
+#    v_seg_file = v_seg_file.split("\\")[0] + "\\" + v_seg_file.split("\\")[1]
+#    v_seg_file.encode('unicode-escape')
+    print(v_seg_file)
+#    exit()
+    with open(v_seg_file, "wb") as f:
         f.write(r.content)
     full_video += r.content
 
     # audio
     current_segement_url = base_url + "audio/" + str(video_id) + "/chop/" + segment_base_name + str(i) + segment_base_ext
     r = requests.get(current_segement_url)
-    with open(os.path.join(out_audio ,"audio-" + segment_base_name + str(i) + segment_base_ext), "wb") as f:
+    a_seg_file = os.path.normpath(os.path.join(out_audio ,"audio-" + segment_base_name + str(i) + segment_base_ext))
+    a_seg_file = a_seg_file.split("\\")[0] + "\\" + a_seg_file.split("\\")[1]
+    with open(a_seg_file, "wb") as f:
         f.write(r.content)
     full_audio += r.content
 
-    if i % 10 == 0:
-        print(str(i) + "/" + str(number_of_segments) + " downloaded")
+#    if i % 10 == 0:
+#        print(str(i) + "/" + str(number_of_segments) + " downloaded")
+    print(str(i) + "/" + str(number_of_segments) + " downloaded")
 
 with open(video_id + "_final_video.mp4", "wb") as f:
     f.write(full_video)
